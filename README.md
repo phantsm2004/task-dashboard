@@ -25,7 +25,7 @@ A task management application that allows users to create, organize, and filter 
 
 ### Prerequisites
 
-- Node.js (v18+)
+- Node.js (v22.12+; CI uses Node 22)
 - npm (v10+)
 
 ### Installation

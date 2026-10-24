@@ -37,6 +37,11 @@ jobs:
     - name: Run tests
       run: npm test
 
+    - name: Build application (with data hydration)
+      run: npm run build
+      env:
+        VITE_ENABLE_DATA_HYDRATION: 'true'
+
     # TODO: Add linting steps
     # - name: Run ESLint
     #   run: npm run lint
