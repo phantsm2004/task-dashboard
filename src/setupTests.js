@@ -12,12 +12,20 @@ afterEach(() => {
 });
 
 // Mock framer-motion to avoid animation-related test issues
-vi.mock('framer-motion', () => {
+vi.mock('framer-motion', async (importOriginal) => {
+  const { isValidMotionProp } = await importOriginal();
+  const mockMotionComponent = (tag) => ({ children, ...props }) => {
+    const domProps = Object.fromEntries(
+      Object.entries(props).filter(([key]) => !isValidMotionProp(key))
+    );
+    return React.createElement(tag, domProps, children);
+  };
+
   return {
     motion: {
-      div: ({ children, ...props }) => React.createElement('div', props, children),
-      button: ({ children, ...props }) => React.createElement('button', props, children),
-      p: ({ children, ...props }) => React.createElement('p', props, children)
+      div: mockMotionComponent('div'),
+      button: mockMotionComponent('button'),
+      p: mockMotionComponent('p')
     },
     AnimatePresence: ({ children }) => children,
   };
